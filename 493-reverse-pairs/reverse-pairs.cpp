@@ -1,11 +1,9 @@
 class Solution {
 public:
     long _mergeSort(vector<int>&arr,vector<long>&temp, long left, long right) 
-    { 
-        long mid, inv_count = 0; 
+    {   long mid, inv_count = 0; 
         if (right > left) 
-        { 
-            mid = (right + left) / 2; 
+        {   mid = (right + left) / 2; 
             inv_count += _mergeSort(arr, temp, left, mid); 
             inv_count += _mergeSort(arr, temp, mid + 1, right); 
             inv_count += merge(arr, temp, left, mid + 1, right); 
@@ -13,26 +11,17 @@ public:
         return inv_count; 
     } 
     long merge(vector<int>&arr,vector<long>&temp, long left, long mid, long right) 
-    { 
-        long i, j, k; 
-        long inv_count = 0; 
-        for(int i=left,j=mid;i<=mid-1;i++){
-            while(j<=right&&arr[i]>2LL*arr[j]) j++;
-            inv_count  += j-(mid); 
-        }
-        i = left; 
-        j = mid;  
-        k = left; 
+    {   long i, j, k, inv_count = 0; 
+        i=left;j=mid;
+        //change for 2*ar[j]
         while ((i <= mid - 1) && (j <= right)) 
-        { 
-            if (arr[i] <= arr[j]) 
-            { 
-                temp[k++] = arr[i++]; 
-            } 
-            else
-            { 
-                temp[k++] = arr[j++]; 
-            } 
+        {   if (arr[i] <= 2LL*arr[j]) i++;
+            else j++,inv_count  += mid-i; 
+        } 
+        i = left; j = mid;  k = left; 
+        while ((i <= mid - 1) && (j <= right)) 
+        {   if (arr[i] <= arr[j])    temp[k++] = arr[i++]; 
+            else  temp[k++] = arr[j++]; 
         } 
         while (i <= mid - 1) 
             temp[k++] = arr[i++]; 
